@@ -9,8 +9,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
-import java.util.UUID;
 
+import static com.example.accounts.fixtures.AccountEntityFixture.defaultAccountEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -21,10 +21,10 @@ class AccountDataSourceIT {
 
     @Test
     void findByEmail_whenAccountExist_shouldReturnAnAccount() {
-        AccountEntity entity = new AccountEntity(UUID.randomUUID(), "testerino@email.com", "password1234", "USER");
+        AccountEntity entity = defaultAccountEntity();
         sut.save(entity);
 
-        Optional<AccountEntity> result = sut.findByEmail("testerino@email.com");
+        Optional<AccountEntity> result = sut.findByEmail(entity.getEmail());
 
         assertThat(result).contains(entity);
     }
