@@ -3,6 +3,20 @@ name: Account CI
 on: [ push ]
 
 jobs:
+  all:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2   
+    - name: Set up
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+    - name: Build application
+      run: ./gradlew build
+    - name: Run tests
+      run: ./gradlew :test --tests *
+     
   checkout:
     runs-on: ubuntu-latest
 
