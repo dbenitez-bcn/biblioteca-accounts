@@ -29,6 +29,7 @@ jobs:
         key: ${{ runner.os }}-code-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-code-
+    - run: pwd
 
   Build:
 
@@ -41,6 +42,8 @@ jobs:
         key: ${{ runner.os }}-code-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-code-
+    - run: pwd
+    - run: ls
     - name: Set up
       uses: actions/setup-java@v1
       with:
