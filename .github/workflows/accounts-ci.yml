@@ -12,7 +12,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
+        key: ${{ runner.os }}-code-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-code-
     
@@ -24,7 +24,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
+        key: ${{ runner.os }}-code-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-code-
     - name: Set up
@@ -41,7 +41,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
+        key: ${{ runner.os }}-code-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-code-
     - name: Set up
