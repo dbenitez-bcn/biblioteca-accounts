@@ -3,32 +3,47 @@ name: Account CI
 on: [ push ]
 
 jobs:
-  Build:
-
+  checkout:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      with:
+        path: ~/
+        key: ${{ runner.os }}-code
+        restore-keys: |
+          ${{ runner.os }}-code
+    
+  Build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/cache@v2
+      with:
+        path: ~/
+        key: ${{ runner.os }}-code
+        restore-keys: |
+          ${{ runner.os }}-code
     - name: Set up
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
     - name: Build application
       run: ./gradlew build
-    - uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-dependencies
   
   run-tests:
     runs-on: ubuntu-latest
     needs: [Build]
     steps:
+    - uses: actions/cache@v2
+      with:
+        path: ~/
+        key: ${{ runner.os }}-code
+        restore-keys: |
+          ${{ runner.os }}-code
     - name: Set up
       uses: actions/setup-java@v1
       with:
