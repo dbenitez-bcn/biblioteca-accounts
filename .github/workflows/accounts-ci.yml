@@ -19,7 +19,7 @@ jobs:
     - name: Build application
       run: ./gradlew build
   
-  "Run tests":
+  run-tests:
     runs-on: ubuntu-latest
     needs: [Build]
     steps:
