@@ -12,9 +12,9 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code
+        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
         restore-keys: |
-          ${{ runner.os }}-code
+          ${{ runner.os }}-code-
     
   Build:
 
@@ -24,9 +24,9 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code
+        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
         restore-keys: |
-          ${{ runner.os }}-code
+          ${{ runner.os }}-code-
     - name: Set up
       uses: actions/setup-java@v1
       with:
@@ -41,9 +41,9 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ~/
-        key: ${{ runner.os }}-code
+        key: ${{ runner.os }}-code-${{ GITHUB_SHA }}
         restore-keys: |
-          ${{ runner.os }}-code
+          ${{ runner.os }}-code-
     - name: Set up
       uses: actions/setup-java@v1
       with:
