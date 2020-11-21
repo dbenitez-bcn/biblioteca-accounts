@@ -23,10 +23,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - run: echo "hello" >> ~/hello.txt 
+    - run: pwd
+    - run: ls
+    - run: echo "hello" >> hello.txt 
     - uses: actions/cache@v2
       with:
-        path: ~/hello.txt
+        path: hello.txt
         key: ${{ runner.os }}-hello-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-hello-
@@ -37,7 +39,7 @@ jobs:
     steps:
     - uses: actions/cache@v2
       with:
-        path: ~/hello.txt
+        path: hello.txt
         key: ${{ runner.os }}-hello-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-hello-
