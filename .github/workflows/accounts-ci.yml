@@ -16,6 +16,8 @@ jobs:
           ./*
           !./docker
           !./.github
+          !./.git
+          !./.gitignore
         key: code-${{ github.sha }}
     - run: ls -la
 
@@ -60,5 +62,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
+    - run: ls -la
     - name: Run tests application
       run: ./gradlew test
+    - run: ls -la
