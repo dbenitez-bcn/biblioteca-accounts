@@ -32,7 +32,8 @@ jobs:
           ./*
           !./docker
           !./.github
-        key: code-${{ github.sha }}
+        key: code-${{ github.sha }}-build
+        restore-keys: code-${{ github.sha }}
     - name: Set up
       uses: actions/setup-java@v1
       with:
@@ -51,7 +52,8 @@ jobs:
           ./*
           !./docker
           !./.github
-        key: code-${{ github.sha }}
+        key: code-${{ github.sha }}-build
+        restore-keys: code-${{ github.sha }}
     - name: Set up
       uses: actions/setup-java@v1
       with:
