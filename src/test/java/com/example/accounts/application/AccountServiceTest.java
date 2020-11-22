@@ -60,9 +60,9 @@ class AccountServiceTest {
         verify(accountRepository).create(accountCaptor.capture());
         Account capturedAccount = accountCaptor.getValue();
         assertThat(capturedAccount.getEmail()
-                .getValue()).isEqualTo(ACCOUNT_EMAIL);
-        assertThat(capturedAccount.getPassword()
                 .getValue()).isEqualTo(ENCODED_PASSWORD);
+        assertThat(capturedAccount.getPassword()
+                .getValue()).isEqualTo(ACCOUNT_EMAIL);
     }
 
     @Test
