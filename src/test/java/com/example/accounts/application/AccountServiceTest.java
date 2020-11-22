@@ -119,7 +119,7 @@ class AccountServiceTest {
         willFindAnAccount(ACCOUNT);
         passwordMatch();
 
-        Account result = sut.login(ACCOUNT_EMAIL, ACCOUNT_PASSWORD);
+        sut.login(ACCOUNT_EMAIL, ACCOUNT_PASSWORD);
 
         verify(accountRepository).getByEmail(new AccountEmail(ACCOUNT_EMAIL));
         verify(passwordManager).matches(new PlainPassword(ACCOUNT.getPassword().getValue()), ACCOUNT.getPassword());
