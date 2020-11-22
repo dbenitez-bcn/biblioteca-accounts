@@ -9,24 +9,29 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - uses: actions/cache@v2
+    - name: Cache code
+      uses: actions/cache@v2
       with:
         path: ./*
         key: code-${{ github.sha }}
 
-  Build:
-
+  build:
     runs-on: ubuntu-latest
+    
     needs: [checkout]
+    
     steps:
-    - uses: actions/cache@v2
+    - name: Cache code
+      uses: actions/cache@v2
       with:
         path: ./*
         key: code-${{ github.sha }}
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
-        path: ~/.gradle/caches
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
         key: gradle-dependencies-${{ hashFiles('**/*.gradle') }}
         restore-keys: gradle-dependencies-
     - name: Set up
@@ -35,4 +40,5 @@ jobs:
         java-version: 1.11
     - name: Build application
       run: ./gradlew compileJava
-    - run: ./gradlew test
+    - name: Run tests application
+      run: ./gradlew test
