@@ -35,3 +35,4 @@ jobs:
         java-version: 1.11
     - name: Build application
       run: ./gradlew build
+    - run: ./gradlew test
