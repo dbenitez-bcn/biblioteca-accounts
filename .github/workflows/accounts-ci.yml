@@ -33,18 +33,28 @@ jobs:
           !./docker
           !./.github
         key: code-${{ github.sha }}
-    - run: ls
-    - name: Cache Gradle packages
-      uses: actions/cache@v2
-      with:
-        path: ./.gradle/*
-        key: gradle-dependencies-${{ hashFiles('**/*.gradle') }}
-        restore-keys: gradle-dependencies-
     - name: Set up
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
     - name: Build application
-      run: ./gradlew compileJava
+      run: ./gradlew compileJava compileTestJava
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - name: Cache code
+      uses: actions/cache@v2
+      with:
+        path: |
+          ./*
+          !./docker
+          !./.github
+        key: code-${{ github.sha }}
+    - name: Set up
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
     - name: Run tests application
       run: ./gradlew test
