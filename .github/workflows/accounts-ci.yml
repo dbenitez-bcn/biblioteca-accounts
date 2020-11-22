@@ -13,7 +13,7 @@ jobs:
     - run: ls
     - uses: actions/cache@v2
       with:
-        path: ./src
+        path: ./*
         key: ${{ runner.os }}-code-${{ github.sha }}
     - run: cd ~
     - run: pwd
@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/cache@v2
       with:
-        path: ./src
+        path: ./*
         key: ${{ runner.os }}-code-${{ github.sha }}
     - run: pwd
     - run: ls
