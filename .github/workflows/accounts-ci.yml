@@ -34,6 +34,8 @@ jobs:
           ./*
           !./docker
           !./.github
+          !./.git
+          !./.gitignore
         key: code-${{ github.sha }}-build
         restore-keys: code-${{ github.sha }}
     - run: ls -la
@@ -56,6 +58,8 @@ jobs:
           ./*
           !./docker
           !./.github
+          !./.git
+          !./.gitignore
         key: code-${{ github.sha }}-build
         restore-keys: code-${{ github.sha }}
     - name: Set up
