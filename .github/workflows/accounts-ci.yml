@@ -9,14 +9,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - run: pwd
-    - run: ls
     - uses: actions/cache@v2
       with:
         path: ./*
-        key: ${{ runner.os }}-code-${{ github.sha }}
-    - run: cd ~
-    - run: pwd
+        key: code-${{ github.sha }}
 
   Build:
 
@@ -26,9 +22,13 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ./*
-        key: ${{ runner.os }}-code-${{ github.sha }}
-    - run: pwd
-    - run: ls
+        key: code-${{ github.sha }}
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.gradle/caches
+        key: gradle-dependencies-${{ hashFiles('**/*.gradle') }}
+        restore-keys: gradle-dependencies-
     - name: Set up
       uses: actions/setup-java@v1
       with:
