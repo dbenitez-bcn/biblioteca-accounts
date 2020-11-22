@@ -27,8 +27,6 @@ jobs:
       with:
         path: ./
         key: ${{ runner.os }}-code-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-code-
     - run: pwd
 
   Build:
@@ -40,8 +38,6 @@ jobs:
       with:
         path: ./
         key: ${{ runner.os }}-code-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-code-
     - run: pwd
     - run: ls
     - name: Set up
