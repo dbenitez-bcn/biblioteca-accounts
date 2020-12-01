@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'idea'
 }
 
 group = 'com.example'
@@ -12,6 +13,8 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	integrationTestCompile.extendsFrom testCompile
+	integrationTestRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -39,4 +42,38 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	integrationTest {
+		java.srcDir file('src/integration-test/java')
+		compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+		runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+	}
+	end2end {
+		java.srcDir file('src/end-2-end/java')
+		compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+		runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+	}
+}
+
+task integrationTest(type: Test) {
+	group 'Verification'
+	description 'Runs the integration tests.'
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+task end2endTest(type: Test) {
+	group 'Verification'
+	description 'Runs the end to end tests.'
+	testClassesDirs = sourceSets.end2end.output.classesDirs
+	classpath = sourceSets.end2end.runtimeClasspath
+}
+
+idea {
+	module {
+		testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+		testSourceDirs += project.sourceSets.end2end.java.srcDirs
+	}
 }
