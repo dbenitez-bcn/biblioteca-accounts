@@ -13,8 +13,6 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-	integrationTestCompile.extendsFrom testCompile
-	integrationTestRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -46,34 +44,54 @@ test {
 
 sourceSets {
 	integrationTest {
-		java.srcDir file('src/integration-test/java')
-		compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
-		runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
-	}
-	end2end {
-		java.srcDir file('src/end-2-end/java')
-		compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
-		runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
 	}
 }
 
+configurations {
+	integrationTestImplementation.extendsFrom testImplementation
+	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
 task integrationTest(type: Test) {
-	group 'Verification'
-	description 'Runs the integration tests.'
+	useJUnitPlatform()
+	description = 'Runs integration tests.'
+	group = 'verification'
+
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
-task end2endTest(type: Test) {
-	group 'Verification'
-	description 'Runs the end to end tests.'
+idea {
+	module {
+		testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+	}
+}
+
+sourceSets {
+	end2end {
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
+	}
+}
+
+configurations {
+	end2endImplementation.extendsFrom testImplementation
+	end2endRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task end2end(type: Test) {
+	useJUnitPlatform()
+	description = 'Runs integration tests.'
+	group = 'verification'
+
 	testClassesDirs = sourceSets.end2end.output.classesDirs
 	classpath = sourceSets.end2end.runtimeClasspath
 }
 
 idea {
 	module {
-		testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
 		testSourceDirs += project.sourceSets.end2end.java.srcDirs
 	}
 }
